@@ -24,14 +24,19 @@ public class CoinScript : MonoBehaviour
             photonView.Owner.SetCustomProperties(
                 new Hashtable() {{"coin", ++currentCoin }}
             );
+            // photonView.RPC("RemoveCoin",RpcTarget.OthersBuffered);
             DestroyCoin();
         }
+    }
+    [PunRPC]
+    void RemoveCoin(){
+        Destroy(gameObject);
     }
     void DestroyCoin(){
         GameObject[] coin = GameObject.FindGameObjectsWithTag("Coin");
         if(coin.Length <= 1){
             GameplayController.instance.GameEnd();
         }
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 }

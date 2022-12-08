@@ -50,7 +50,7 @@ public class PlayerAttribute : MonoBehaviourPunCallbacks
             }
         }
 
-        if(changeProps.ContainsKey("coin")){
+        if(changeProps.ContainsKey("coin") && photonView.Owner.IsLocal){
             GameObject.Find("CoinAlert").GetComponent<TextMeshProUGUI>().text = "Coin collected : "+changeProps["coin"].ToString();
         }
         

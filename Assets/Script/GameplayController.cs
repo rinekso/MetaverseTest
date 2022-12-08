@@ -62,11 +62,11 @@ public class GameplayController : MonoBehaviour
     }
     [PunRPC]
     public void StartGame(){
-        print(_coinsContainer.childCount);
-        for (int i = 0; i < _coinsContainer.childCount; i++)
-        {
-            Instantiate(_coinPrefabs,_coinsContainer.GetChild(i).position,new Quaternion());
-        }
+        if(PhotonNetwork.IsMasterClient)
+            for (int i = 0; i < _coinsContainer.childCount; i++)
+            {
+                PhotonNetwork.Instantiate("CoinPrefab",_coinsContainer.GetChild(i).position,new Quaternion());
+            }
     }
 
     // Update is called once per frame
