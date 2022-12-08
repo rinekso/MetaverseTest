@@ -161,10 +161,15 @@ namespace StarterAssets
             GroundedCheck();
             Move();
         }
+        bool escState = false;
         void Escape(){
             if(_input.esc){
                 _input.esc = false;
-                UnFocusPlayer();
+                escState = !escState;
+                if(escState)
+                    UnFocusPlayer();
+                else
+                    FocusPlayer();
             }
         }
         public void UnFocusPlayer(){

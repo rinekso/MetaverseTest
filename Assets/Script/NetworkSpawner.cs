@@ -37,6 +37,7 @@ public class NetworkSpawner : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
 
+
         if(PhotonNetwork.IsMasterClient){
             GameplayController.instance.ShowGameplayPanel();
         }
@@ -47,6 +48,8 @@ public class NetworkSpawner : MonoBehaviourPunCallbacks
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("PlayerPrefab", pos,new Quaternion());
 
         if(spawnedPlayerPrefab.GetComponent<PhotonView>().IsMine){
+            ChatController.instance.UserName = PhotonNetwork.LocalPlayer.NickName;
+            ChatController.instance.Connect();
             print("Set Camera");
             playerFollowCamera.Follow = spawnedPlayerPrefab.transform.GetChild(0);
         }

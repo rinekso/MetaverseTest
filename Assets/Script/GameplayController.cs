@@ -59,9 +59,18 @@ public class GameplayController : MonoBehaviour
             );
         }
         _gameplayEndPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Highscore is = "+name+"\n Score is = "+maxScore;
+        GetComponent<PhotonView>().RPC("ShowEnd",RpcTarget.OthersBuffered,"Highscore is = "+name+"\n Score is = "+maxScore);
+
+    }
+    [PunRPC]
+    void ShowEnd(string message){
+        _gameplayEndPanel.SetActive(true);
+        _gameplayEndPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = message;
     }
     [PunRPC]
     public void StartGame(){
+        _gameplayEndPanel.SetActive(false);
+        _gameplayPanel.SetActive(false);
         if(PhotonNetwork.IsMasterClient)
             for (int i = 0; i < _coinsContainer.childCount; i++)
             {
